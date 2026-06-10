@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend-blue
+  namespace: ecommerce
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+      version: blue
+
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: blue
+
+    spec:
+      containers:
+      - name: backend
+
+        image: ecommerce-app-backend:latest
+
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 3000
+
+        env:
+        - name: DATABASE_URL
+          value: postgresql://postgres:postgres123@postgres:5432/ecommercedb
+
+        - name: JWT_SECRET
+          value: mysecretkey
+
+        - name: JWT_EXPIRES_IN
+          value: 1d

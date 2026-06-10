@@ -1,25 +1,39 @@
-# compiled output
+# ===============================
+# BUILD OUTPUTS
+# ===============================
 /dist
-/node_modules
 /build
+/out
 
-# Logs
+# ===============================
+# DEPENDENCIES
+# ===============================
+/node_modules
+
+# ===============================
+# LOGS
+# ===============================
 logs
 *.log
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 lerna-debug.log*
 
-# OS
+# ===============================
+# OS FILES
+# ===============================
 .DS_Store
 
-# Tests
+# ===============================
+# TEST OUTPUT
+# ===============================
 /coverage
 /.nyc_output
 
-# IDEs and editors
+# ===============================
+# IDE / EDITORS
+# ===============================
 /.idea
 .project
 .classpath
@@ -28,31 +42,82 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
+# VSCode (keep safe config only)
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# dotenv environment variable files
+# ===============================
+# ENVIRONMENT VARIABLES (VERY IMPORTANT)
+# ===============================
 .env
+.env.*
 .env.development.local
 .env.test.local
 .env.production.local
 .env.local
 
-# temp directory
+# ===============================
+# TEMP FILES
+# ===============================
 .temp
 .tmp
 
-# Runtime data
+# ===============================
+# RUNTIME DATA
+# ===============================
 pids
 *.pid
 *.seed
 *.pid.lock
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# ===============================
+# NODE REPORTS
+# ===============================
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# ===============================
+# PRISMA
+# ===============================
 /generated/prisma
+
+# ===============================
+# DOCKER (IMPORTANT ADDITION)
+# ===============================
+*.tar
+docker-compose.override.yml
+
+# ===============================
+# KUBERNETES (IMPORTANT ADDITION)
+# ===============================
+# DO NOT commit local Kubernetes overrides or sensitive configs
+kubeconfig
+*.kubeconfig
+
+# local secrets (if ever created outside YAML templates)
+**/*secret*.yaml
+
+# ===============================
+# DATABASE / STATEFUL DATA (IMPORTANT ADDITION)
+# ===============================
+database/
+pgdata/
+postgres-data/
+data/
+volumes/
+
+# ===============================
+# CLOUD / CI-CD SECRETS (IMPORTANT ADDITION)
+# ===============================
+.aws/
+.aws/credentials
+aws-credentials.json
+
+# ===============================
+# BACKUP FILES
+# ===============================
+*.bak
+*.backup
+*.old

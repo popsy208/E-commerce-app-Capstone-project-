@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+
+  # ======================
+  # POSTGRES DATABASE
+  # ======================
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecommercedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # ======================
+  # BACKEND (NESTJS)
+  # ======================
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ecommercedb
+      JWT_SECRET: mysecretkey
+      JWT_EXPIRES_IN: 1d
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  # ======================
+  # FRONTEND (STATIC SITE)
+  # ======================
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+# ======================
+# VOLUMES (DB STORAGE)
+# ======================
+volumes:
+  pgdata:
+
+# ======================
+# NETWORK (IMPORTANT)
+# ======================
+networks:
+  app-network:
+    driver: bridge
