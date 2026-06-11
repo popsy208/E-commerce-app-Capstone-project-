@@ -7,7 +7,6 @@ metadata:
 
 spec:
   serviceName: postgres
-
   replicas: 1
 
   selector:
@@ -21,45 +20,50 @@ spec:
 
     spec:
       containers:
-      - name: postgres
-        image: postgres:16
+        - name: postgres
+          image: postgres:16
 
-        ports:
-        - containerPort: 5432
+          ports:
+            - containerPort: 5432
 
-        env:
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
 
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
 
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
 
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_DB
+            # 🔥 FIX: tells Postgres to use safe subdirectory
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
 
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata   # 🔥 FIX: avoids lost+found issue
 
   volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
 
-  - metadata:
-      name: postgres-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
 
-    spec:
-      accessModes:
-      - ReadWriteOnce
+        storageClassName: gp2   # REQUIRED for EKS EBS provisioning
 
-      resources:
-        requests:
-          storage: 5Gi
+        resources:
+          requests:
+            storage: 5Gi

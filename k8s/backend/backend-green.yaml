@@ -23,9 +23,9 @@ spec:
       containers:
       - name: backend
 
-        image: ecommerce-app-backend:latest
+        image: 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-backend:latest
 
-        imagePullPolicy: Never
+        imagePullPolicy: Always
 
         ports:
         - containerPort: 3000
