@@ -29,11 +29,11 @@ jobs:
 
     - name: Tag image
       run: |
-        docker tag ecommerce-backend:latest 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-app-backend:latest
+        docker tag ecommerce-backend:latest 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-backend:latest
 
     - name: Push image to ECR
       run: |
-        docker push 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-app-backend:latest
+        docker push 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-backend:latest
 
     - name: Deploy to EKS
       run: |
