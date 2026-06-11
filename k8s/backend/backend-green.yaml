@@ -21,7 +21,7 @@ spec:
 
     spec:
       containers:
-      - name: backend
+      - name: ecommerce-backend
 
         image: 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-backend:latest
 

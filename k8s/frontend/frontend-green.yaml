@@ -10,7 +10,7 @@ spec:
 
   selector:
     matchLabels:
-      app: frontend
+      app: ecommerce-frontend
       version: green
 
   template:
@@ -21,7 +21,7 @@ spec:
 
     spec:
       containers:
-      - name: frontend
+      - name: ecommerce-frontend
 
         image: 046819497518.dkr.ecr.eu-west-2.amazonaws.com/ecommerce-frontend:latest
 
